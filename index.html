@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
   <title>倒计时网页</title>
   <style>
     /* 全屏背景渐变效果 */
@@ -17,21 +18,23 @@
       color: white;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      max-width: 100vw;
     }
     
     /* 倒计时时钟样式 */
     #countdown-label {
-      font-size: 24px;
+      font-size: 38px;
     }
     
     #countdown {
-      font-size: 48px;
+      font-size: 52px;
     }
     
     /* 祝福语句动画效果 */
     #message {
       opacity: 0;
-      animation: fade-in 2s forwards;
+      animation: fade-in 4s forwards;
+      font-size: 32px;
     }
     
     @keyframes fade-in {
@@ -50,12 +53,14 @@
     
     #calculate-btn {
       margin-top: 10px;
-      padding: 5px 10px;
+      padding: 6px 20px;
+      font-size: 32px;
     }
 
     #college-input {
-      height: 28px;
-      width: 132px;
+      height: 56px;
+      width: 340px;
+      font-size: 32px;
     }
 
     /* 下雪背景效果 */
@@ -77,6 +82,10 @@
       opacity: 0.8;
       pointer-events: none;
       animation: snowfall linear infinite;
+    }
+
+    #count {
+      padding-top: 18px;
     }
 
     @keyframes snowfall {
@@ -109,6 +118,8 @@
 
   <!-- 下雪背景效果 -->
   <div id="snow-container"></div>
+
+  <div id="count"></div>
   
   <script>
     // 更新倒计时时钟
@@ -123,7 +134,7 @@
       var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
       
       var countdownLabelElement = document.getElementById("countdown-label");
-      countdownLabelElement.textContent = "李睿阳同学，距离高考还剩";
+      countdownLabelElement.innerHTML = "<b style='color: red'>李睿阳</b>同学，距离高考还剩";
       
       var countdownElement = document.getElementById("countdown");
       countdownElement.textContent = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
@@ -135,10 +146,16 @@
     // 设置考中几率为100%
     document.getElementById("calculate-btn").addEventListener("click", function() {
       var collegeInput = document.getElementById("college-input").value;
+      if(!collegeInput) {
+        document.getElementById("count").innerText = "请输入想考入的院校";
+        return;
+      }
       var resultElement = document.createElement("div");
-      resultElement.textContent = "您考入 " + collegeInput + " 的几率为 100%！";
+      resultElement.textContent = "您考入 " + collegeInput + " 的几率为 "+ Math.floor(Math.random() * 100) +"%！";
       resultElement.style.color = 'red';
-      document.body.appendChild(resultElement);
+      resultElement.style.fontSize = '28px';
+      document.getElementById("count").innerHTML = "";
+      document.getElementById("count").appendChild(resultElement);
     });
 
     // 下雪背景效果
@@ -146,9 +163,9 @@
       const snowflake = document.createElement('div');
       snowflake.classList.add('snowflake');
       snowflake.style.left = Math.random() * window.innerWidth + 'px';
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.animationDuration = Math.random() * 3 + 4 + 's';
       snowflake.style.opacity = Math.random();
-      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.fontSize = Math.random() * 40 + 10 + 'px';
 
       const randomColor = getRandomColor();
       snowflake.style.backgroundColor = randomColor;
